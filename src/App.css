@@ -1,0 +1,62 @@
+.App {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin: 50px;
+
+  }
+  
+  h1 {
+    color: #333;
+    max-width: 20%;
+    min-width: 400px;
+    margin: auto;
+    padding: 0 0 12px;
+    border-bottom: 3px solid #acadad;
+  }
+  
+  input[type="file"] {
+    display: block;
+    margin: 20px auto;
+  }
+
+  input::file-selector-button {
+    font-weight: bold;
+    color: rgb(79, 79, 80);
+    padding: 1em;
+    border: thin solid grey;
+    border-radius: .5px;
+    background-color: #fff;
+  }
+
+  input::file-selector-button:hover {
+    background-color: #acadad;
+    transition: .5s;
+  }
+  
+  .loader {
+    display: inline-block;
+    margin: 20px;
+    font-size: 18px;
+  }
+  
+  .error {
+    color: #FF0000;
+  }
+
+  .wrapper {
+    margin: auto;
+    max-width: 70rem;
+    background-color: #f1f1f1;
+    padding: 50px 0;
+  }
+  
+  img {
+    display: block;
+    margin: auto;
+    width: 90%;
+    height: 90%;
+  }
+
+  .imagePreview {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  }
