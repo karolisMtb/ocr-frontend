@@ -1,10 +1,12 @@
 import "./App.css";
-import SingleFileUploader from "./components/SingleFileUploader";
+import SingleFileUploader from "./components/SFU/SingleFileUploader";
+import Request from "./components/HttpRequest/Request";
 
 function App() {
   return(
   <div>
     <SingleFileUploader />
+    <Request />
   </div>
   );
 }

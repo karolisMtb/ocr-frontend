@@ -12,6 +12,7 @@
     margin: auto;
     padding: 0 0 12px;
     border-bottom: 3px solid #acadad;
+    text-align: center;
   }
   
   input[type="file"] {
