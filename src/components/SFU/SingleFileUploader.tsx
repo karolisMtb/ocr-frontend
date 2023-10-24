@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css";
 
 
   
@@ -9,8 +10,9 @@ import { useState } from "react";
         const [file, setFile] = useState("");
         const [error, setError] = useState("");
         const [loading, setLoading] = useState(false);
+        const [certificate, setCertificate] = useState(null);
         
-        const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
             if(file != "") {
                 setFile("");
             }
@@ -19,7 +21,7 @@ import { useState } from "react";
 
         const fileData = e.target.files[0];
 
-        if (fileData) { // null
+        if (fileData) { 
             const formData = new FormData();
             formData.append("file", fileData);
 
@@ -30,23 +32,21 @@ import { useState } from "react";
             };
 
             reader.readAsDataURL(fileData);
-            
-            const apiUrl = "https://localhost:7071/documents/image";
-            const data = fetch(apiUrl, {
-                method: "post",
-                headers: {},
+          
+            const apiUrl = "https://localhost:7071/documents/certificate";
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                // headers: {},
                 body: formData
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((error) => {
-                console.error("Error during file upload:", error);
-                setError("Error during file upload. Please check your server.");
             });
+          
+            if(response.ok) {
+              const certificateData = await response.json();
+              setCertificate(certificateData);
+            } else {
+              console.log("Error uploading file");
+            }
 
-            console.log(data);
         }
         else {
             setLoading(false)
@@ -55,6 +55,7 @@ import { useState } from "react";
     }
 
     return (
+        <>
           <div className="App">
             <h1>Image Uploader</h1>
             <input
@@ -62,15 +63,32 @@ import { useState } from "react";
               className="inputForm"
               accept=".pdf, .jpg, .jpeg" 
               onChange={handleImageUpload}
-            />
+              />
             {loading && <div className="loader">Loading...</div>}
             {error && <p className="error">{error}</p>}
             {file && (
-              <div className="wrapper">
+                <div className="wrapper">
                 {<img className="imagePreview" src={file} alt="Uploaded" />}
               </div>
             )}
+            {certificate && (
+              <div>
+              <h1>{certificate.title}</h1>
+              <table className="table table-striped data-table">
+                <thead></thead>
+                <tbody>
+                    {certificate.valuation.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.course}</td>
+                      <td>{item.note}</td> 
+                    </tr>
+                    ))}
+                </tbody>
+              </table>
+              </div>
+            )}
           </div>
+        </>
       );
     };
 
